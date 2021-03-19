@@ -7,16 +7,10 @@ class Play extends Phaser.Scene {
   }
 
   create() {
-    this.playerSpeed = 200;
     const map = this.createMap();
     const layers = this.createLayers(map);
-    this.player = this.createPlayer();
-    this.createCollider(this.player, layers)
-    this.createCursor();
-  }
-
-  update() {
-    this.createMovement();
+    const player = this.createPlayer();
+    this.createCollider(player, layers)
   }
 
 
@@ -40,29 +34,12 @@ class Play extends Phaser.Scene {
   }
 
   createPlayer() {
-    const player = new Player(this, 100, 200);
-    player.body.setGravityY(500)
-    player.setCollideWorldBounds(true);
-    return player;
+    return new Player(this, 100, 200);
+
   }
 
   createCollider(player, layers) {
     this.physics.add.collider(player, layers.platformCollider);
-  }
-
-  createCursor() {
-    this.cursor = this.input.keyboard.createCursorKeys();
-  }
-
-  createMovement() {
-    const { left, right } = this.cursor
-    if (left.isDown) {
-      this.player.setVelocityX(-this.playerSpeed)
-    } else if (right.isDown) {
-      this.player.setVelocityX(this.playerSpeed)
-    } else {
-      this.player.setVelocityX(0)
-    }
   }
 
 }
